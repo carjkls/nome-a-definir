@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EscolaFlux MVP</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; max-width: 900px; }
+      .card { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+      input, button { padding: .5rem; margin: .3rem 0; display: block; width: 100%; }
+      pre { background: #f6f6f6; padding: 1rem; overflow: auto; }
+    </style>
+  </head>
+  <body>
+    <h1>EscolaFlux - Painel Base</h1>
+    <div class="card">
+      <h2>Login</h2>
+      <input id="email" placeholder="email" />
+      <input id="password" type="password" placeholder="senha" />
+      <button onclick="login()">Entrar</button>
+    </div>
+    <div class="card">
+      <h2>Resumo</h2>
+      <button onclick="loadSummary()">Carregar dashboard</button>
+      <pre id="output"></pre>
+    </div>
+
+    <script>
+      const API = 'http://localhost:3333';
+      let token = '';
+
+      async function login() {
+        const res = await fetch(`${API}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value
+          })
+        });
+        const data = await res.json();
+        token = data.token;
+        document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+      }
+
+      async function loadSummary() {
+        const res = await fetch(`${API}/dashboard/summary`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+      }
+    </script>
+  </body>
+</html>
