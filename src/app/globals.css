@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --primary: 270 80% 60%;
+    --primary-foreground: 0 0% 100%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 222.2 47.4% 11.2%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 270 80% 60%;
+  }
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    --font-plus-jakarta: "Plus Jakarta Sans";
+    --font-jetbrains-mono: "JetBrains Mono";
+    --font-be-vietnam: "Be Vietnam Pro";
+    --font-satoshi: "Satoshi";
+    --font-cabinet: "Cabinet Grotesk";
+  }
+}
+
+@layer utilities {
+  .paper-shadow {
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+  }
+
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+  }
+
+  .thin-dark-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
+  }
+
+  .thin-dark-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .thin-dark-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .thin-dark-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+  }
+}
+
+@media print {
+  .paper-shadow {
+    box-shadow: none;
+    border: 1px solid #e2e8f0;
+  }
+}
