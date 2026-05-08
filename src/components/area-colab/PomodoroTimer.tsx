@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { RollingCounter } from './RollingCounter';
-import { Play, Pause, RotateCcw } from 'lucide-react';
+import { Play, Pause, RotateCcw, Plus, Minus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PomodoroTimerProps {
@@ -25,8 +25,11 @@ export function PomodoroTimer({
     initialMode === 'work' ? workMinutes * 60 : breakMinutes * 60
   );
   const [isRunning, setIsRunning] = useState(false);
+  const [customWorkMinutes, setCustomWorkMinutes] = useState(workMinutes);
+  const [customBreakMinutes, setCustomBreakMinutes] = useState(breakMinutes);
 
-  const totalTime = mode === 'work' ? workMinutes * 60 : breakMinutes * 60;
+  const activeWorkMinutes = customWorkMinutes;
+  const activeBreakMinutes = customBreakMinutes;
 
   useEffect(() => {
     if (!isRunning) return;
@@ -36,7 +39,7 @@ export function PomodoroTimer({
           clearInterval(timer);
           const newMode = mode === 'work' ? 'break' : 'work';
           setMode(newMode);
-          const newTotal = newMode === 'work' ? workMinutes : breakMinutes;
+          const newTotal = newMode === 'work' ? activeWorkMinutes : activeBreakMinutes;
           onComplete?.();
           return newTotal * 60;
         }
@@ -44,14 +47,25 @@ export function PomodoroTimer({
       });
     }, 1000);
     return () => clearInterval(timer);
-  }, [isRunning, mode, workMinutes, breakMinutes, onComplete]);
+  }, [isRunning, mode, activeWorkMinutes, activeBreakMinutes, onComplete]);
 
   const toggle = useCallback(() => setIsRunning(!isRunning), [isRunning]);
 
   const reset = useCallback(() => {
     setIsRunning(false);
-    setTimeLeft(mode === 'work' ? workMinutes * 60 : breakMinutes * 60);
-  }, [mode, workMinutes, breakMinutes]);
+    setTimeLeft(mode === 'work' ? activeWorkMinutes * 60 : activeBreakMinutes * 60);
+  }, [mode, activeWorkMinutes, activeBreakMinutes]);
+
+  const addMinutes = useCallback((amount: number) => {
+    setIsRunning(false);
+    if (mode === 'work') {
+      setCustomWorkMinutes((previous) => Math.max(5, Math.min(90, previous + amount)));
+      setTimeLeft((previous) => Math.max(5 * 60, Math.min(90 * 60, previous + amount * 60)));
+    } else {
+      setCustomBreakMinutes((previous) => Math.max(3, Math.min(30, previous + amount)));
+      setTimeLeft((previous) => Math.max(3 * 60, Math.min(30 * 60, previous + amount * 60)));
+    }
+  }, [mode]);
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
@@ -84,6 +98,27 @@ export function PomodoroTimer({
       </div>
       <div className="text-sm text-slate-500 uppercase tracking-wider">
         {mode === 'work' ? 'Foco' : 'Pausa'}
+      </div>
+      <div className="flex items-center gap-2 rounded-full bg-slate-100 p-1">
+        <button
+          type="button"
+          onClick={() => addMinutes(-5)}
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
+          aria-label="Remover 5 minutos"
+        >
+          <Minus size={15} />
+        </button>
+        <span className="min-w-28 text-center text-[10px] font-bold uppercase tracking-widest text-slate-500">
+          ajustar tempo
+        </span>
+        <button
+          type="button"
+          onClick={() => addMinutes(5)}
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
+          aria-label="Adicionar 5 minutos"
+        >
+          <Plus size={15} />
+        </button>
       </div>
       <div className="flex gap-3">
         <button

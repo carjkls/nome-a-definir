@@ -364,7 +364,7 @@ export const PillNav: React.FC<PillNavProps> = ({
               );
 
               const basePillClasses =
-                'relative overflow-hidden inline-flex items-center justify-center h-[calc(var(--nav-h)-12px)] self-center no-underline rounded-full box-border font-medium text-sm uppercase tracking-wider transition-colors duration-200';
+                'relative overflow-hidden inline-flex items-center justify-center h-[calc(var(--nav-h)-12px)] self-center no-underline rounded-full box-border font-medium text-sm uppercase tracking-wider cursor-pointer transition-colors duration-200 hover:z-10';
 
               return (
                 <li key={item.href} role="none" className="flex items-center">

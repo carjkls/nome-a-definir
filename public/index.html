@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EscolaFlux - Área Colab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f3e8ff',
+              100: '#e9d5ff',
+              200: '#d8b4fe',
+              300: '#c084fc',
+              400: '#a855f7',
+              500: '#9333ea',
+              600: '#7C3AED',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+              950: '#2e1065',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .nav-link { transition: background-color 0.2s; }
+    .nav-link.active { background-color: rgba(124, 58, 237, 0.1); color: #7C3AED; }
+    .card-swap-container { position: relative; overflow: hidden; border-radius: 0.5rem; }
+    .card-swap-slide { position: absolute; top:0; left:0; width:100%; height:100%; will-change: transform, opacity; }
+  </style>
+</head>
+<body class="bg-white text-slate-900 antialiased">
+  <nav id="nav" class="fixed top-0 left-0 right-0 bg-white border-b border-slate-200 z-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <ul class="flex overflow-x-auto space-x-2 py-3">
+        <li><a href="#dashboard" class="nav-link px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Dashboard</a></li>
+        <li><a href="#investimentos" class="nav-link px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Investimentos</a></li>
+        <li><a href="#noticias" class="nav-link px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Notícias</a></li>
+        <li><a href="#contador" class="nav-link px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Contador</a></li>
+        <li><a href="#reunioes" class="nav-link px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Reuniões</a></li>
+        <li><a href="#cobrancas" class="nav-link px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Cobranças</a></li>
+        <li><a href="#despesas" class="nav-link px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Despesas</a></li>
+        <li><a href="#colaboradores" class="nav-link px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap">Colaboradores</a></li>
+      </ul>
+    </div>
+  </nav>
+  <main id="app" class="pt-20 pb-10 px-4 max-w-7xl mx-auto"></main>
+  <script src="app.js"></script>
+</body>
+</html>
